@@ -7,4 +7,22 @@ export class Movie {
 
   @Column()
   name: string;
+
+  @Column()
+  director: string;
+
+  @Column()
+  writers: string[];
+
+  @Column()
+  cast: string[];
+
+  @Column()
+  genres: string[];
+
+  @Column()
+  storyline: string;
+
+  @Column()
+  imdbRating: number;
 }
