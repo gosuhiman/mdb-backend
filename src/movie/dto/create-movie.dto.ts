@@ -1,3 +1,3 @@
-export class CreateMovieDto {
+export class CreateMovieDTO {
   readonly name: string;
 }

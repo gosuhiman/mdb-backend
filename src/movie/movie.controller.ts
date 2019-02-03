@@ -1,5 +1,5 @@
 import {Body, Controller, Get, Post} from '@nestjs/common';
-import {CreateMovieDto} from './dto/create-movie.dto';
+import {CreateMovieDTO} from './dto/create-movie.dto';
 import {Movie} from './movie.entity';
 import {MovieService} from './movie.service';
 
@@ -10,7 +10,7 @@ export class MovieController {
   ) {}
 
   @Post()
-  async create(@Body() createMovieDto: CreateMovieDto): Promise<Movie> {
+  async create(@Body() createMovieDto: CreateMovieDTO): Promise<Movie> {
     return this.movieService.create(createMovieDto);
   }
 
