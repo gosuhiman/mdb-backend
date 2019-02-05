@@ -26,17 +26,18 @@ jobs:
           key: *js_deps_cache_key
           paths:
             - node_modules
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - node_modules
 
   test:
     docker:
       - image: circleci/node:10.15
       - image: mongo:3.4.19-jessie
     steps:
-      - checkout
       - *attach_workspace
-      - restore_cache:
-          keys:
-            - *js_deps_cache_key
+      - checkout
       - run:
           name: Test
           command: npm run test
@@ -46,11 +47,8 @@ jobs:
       - image: circleci/node:10.15
       - image: mongo:3.4.19-jessie
     steps:
-      - checkout
       - *attach_workspace
-      - restore_cache:
-          keys:
-            - *js_deps_cache_key
+      - checkout
       - run:
           name: Test integration
           command: npm run test:e2e
