@@ -25,4 +25,10 @@ export class Movie {
 
   @Column()
   imdbRating: number;
+
+  constructor(partial?: Partial<Movie>) {
+    if (partial !== undefined) {
+      Object.assign(this, partial);
+    }
+  }
 }
