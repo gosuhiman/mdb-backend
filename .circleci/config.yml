@@ -1,10 +1,10 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/repo
     docker:
       - image: circleci/node:10.15
       - image: mongo:3.4.19-jessie
-    working_directory: ~/repo
     steps:
       - checkout
       - restore_cache:
@@ -21,7 +21,6 @@ jobs:
     docker:
       - image: circleci/node:10.15
       - image: mongo:3.4.19-jessie
-    working_directory: ~/repo
     steps:
       - checkout
       - run:
@@ -32,7 +31,6 @@ jobs:
     docker:
       - image: circleci/node:10.15
       - image: mongo:3.4.19-jessie
-    working_directory: ~/repo
     steps:
       - checkout
       - run:
