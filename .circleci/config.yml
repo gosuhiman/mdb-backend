@@ -1,4 +1,14 @@
 version: 2
+
+references:
+  js_deps_cache_key: &js_deps_cache_key
+    v8-dependency-js-deps-{{ checksum "package-lock.json" }}
+  workspace_root: &workspace_root
+    /tmp/workspace
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
 jobs:
   build:
     working_directory: ~/repo
@@ -6,16 +16,16 @@ jobs:
       - image: circleci/node:10.15
       - image: mongo:3.4.19-jessie
     steps:
+      - *attach_workspace
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
+            - *js_deps_cache_key
       - run: npm install
       - save_cache:
+          key: *js_deps_cache_key
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
 
   test:
     docker:
@@ -23,6 +33,7 @@ jobs:
       - image: mongo:3.4.19-jessie
     steps:
       - checkout
+      - *attach_workspace
       - run:
           name: Test
           command: npm run test
@@ -33,6 +44,7 @@ jobs:
       - image: mongo:3.4.19-jessie
     steps:
       - checkout
+      - *attach_workspace
       - run:
           name: Test integration
           command: npm run test:e2e
