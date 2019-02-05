@@ -1,23 +1,23 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { merge } from 'lodash';
-import { MongoRepository } from 'typeorm';
-import { CreateMovieDTO } from './dto/create-movie.dto';
-import { Movie } from './movie.entity';
+import {Injectable} from '@nestjs/common';
+import {InjectRepository} from '@nestjs/typeorm';
+import {merge} from 'lodash';
+import {CreateMovieDTO} from './dto/create-movie.dto';
+import {Movie} from './movie.entity';
+import {MovieRepository} from './movie.repository';
 
 @Injectable()
 export class MovieService {
   constructor(
-    @InjectRepository(Movie)
-    private readonly movieRepository: MongoRepository<Movie>,
-  ) {}
+    @InjectRepository(MovieRepository) private readonly movieRepository: MovieRepository,
+  ) {
+  }
 
   async create(createMovieDto: CreateMovieDTO): Promise<Movie> {
     return this.movieRepository.save(createMovieDto);
   }
 
-  async findOne(conditions: Partial<Movie>): Promise<Movie> {
-    return this.movieRepository.findOne(conditions);
+  async findOne(id: string): Promise<Movie> {
+    return this.movieRepository.findOne(id);
   }
 
   async findAll(conditions: Partial<Movie>): Promise<Movie[]> {
@@ -29,8 +29,8 @@ export class MovieService {
     return this.movieRepository.save(merge(movie, newData));
   }
 
-  async remove(conditions: Partial<Movie>): Promise<Movie[]> {
-    const movies: Movie[] = await this.movieRepository.find(conditions);
-    return this.movieRepository.remove(movies);
+  async remove(id: string): Promise<Movie> {
+    const movie: Movie = await this.movieRepository.findOne(id);
+    return this.movieRepository.remove(movie);
   }
 }
