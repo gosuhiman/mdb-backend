@@ -16,5 +16,37 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: npm run test
-      - run: npm run test:e2e
+
+  test:
+    docker:
+      - image: circleci/node:10.15
+      - image: mongo:3.4.19-jessie
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Test
+          command: npm run test
+
+  test-integration:
+    docker:
+      - image: circleci/node:10.15
+      - image: mongo:3.4.19-jessie
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Test integration
+          command: npm run test:e2e
+
+workflows:
+  version: 2
+  cicd:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - test-integration:
+          requires:
+            - build
