@@ -1,0 +1,13 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "./integration/",
+  "testEnvironment": "node",
+  "testRegex": ".integration.spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "@movie/(.*)": "<rootDir>/../../src/movie/$1",
+    "@root/(.*)": "<rootDir>/../../src/$1"
+  }
+}

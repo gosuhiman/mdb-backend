@@ -17,7 +17,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:integration": "jest --config ./test/jest-integration.json"
   },
   "dependencies": {
     "@nestjs/common": "^5.4.0",
@@ -55,12 +55,17 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": "test/unit",
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@movie/(.*)": "<rootDir>/../../src/movie/$1",
+      "@root/(.*)": "<rootDir>/../../src/$1"
+    }
   }
 }
+
