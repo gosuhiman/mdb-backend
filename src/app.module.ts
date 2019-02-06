@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { MovieModule } from './movie/movie.module';
+import {Module} from '@nestjs/common';
+import {TypeOrmModule} from '@nestjs/typeorm';
+import {MovieModule} from '@movie/movie.module';
 
 @Module({
   imports: [
@@ -19,4 +19,5 @@ import { MovieModule } from './movie/movie.module';
     MovieModule,
   ],
 })
-export class AppModule {}
+export class AppModule {
+}

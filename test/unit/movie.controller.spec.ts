@@ -2,10 +2,10 @@ import {Test, TestingModule} from '@nestjs/testing';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {ObjectID} from 'mongodb';
 import * as td from 'testdouble';
-import {movie} from '../../fixtures/movie.entity.fixture';
-import {MovieController} from './movie.controller';
-import {MovieRepository} from './movie.repository';
-import {MovieService} from './movie.service';
+import {movie} from '../fixtures/movie.entity.fixture';
+import {MovieController} from '../../src/movie/movie.controller';
+import {MovieRepository} from '../../src/movie/movie.repository';
+import {MovieService} from '../../src/movie/movie.service';
 
 describe('MovieController', () => {
   let movieController: MovieController;

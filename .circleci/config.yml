@@ -4,7 +4,7 @@ references:
   js_deps_cache_key: &js_deps_cache_key
     v8-dependency-js-deps-{{ checksum "package-lock.json" }}
   workspace_root: &workspace_root
-    ~/repo
+    ~/app
   attach_workspace: &attach_workspace
     attach_workspace:
       at: *workspace_root
@@ -51,7 +51,7 @@ jobs:
       - *attach_workspace
       - run:
           name: Test integration
-          command: npm run test:e2e
+          command: npm run test:integration
 
 workflows:
   version: 2

@@ -1,13 +1,13 @@
+import {MovieRepository} from '@movie/movie.repository';
+import {MovieService} from '@movie/movie.service';
 import {INestApplication} from '@nestjs/common';
 import {Test, TestingModule} from '@nestjs/testing';
 import {getRepositoryToken} from '@nestjs/typeorm';
+import {AppModule} from '@root/app.module';
 import {ObjectID} from 'mongodb';
 import * as request from 'supertest';
 import * as td from 'testdouble';
 import {movie} from '../fixtures/movie.entity.fixture';
-import {AppModule} from '../src/app.module';
-import {MovieRepository} from '../src/movie/movie.repository';
-import {MovieService} from '../src/movie/movie.service';
 
 describe('MovieController (e2e)', () => {
   let app: INestApplication;
