@@ -1,6 +1,6 @@
 import {MovieRepository} from '@movie/movie.repository';
 import {MovieService} from '@movie/movie.service';
-import {INestApplication} from '@nestjs/common';
+import {HttpStatus, INestApplication, ValidationPipe} from '@nestjs/common';
 import {Test, TestingModule} from '@nestjs/testing';
 import {getRepositoryToken} from '@nestjs/typeorm';
 import {AppModule} from '@root/app.module';
@@ -30,6 +30,10 @@ describe('MovieController (e2e)', () => {
       .compile();
 
     app = moduleFixture.createNestApplication();
+    app.useGlobalPipes(new ValidationPipe({
+      transform: true,
+      whitelist: true,
+    }));
     await app.init();
   });
 
@@ -38,7 +42,7 @@ describe('MovieController (e2e)', () => {
 
     return request(app.getHttpServer())
       .get(`/movies/${movie.id}`)
-      .expect(200)
+      .expect(HttpStatus.OK)
       .expect(toRaw(movie));
   });
 
@@ -47,8 +51,26 @@ describe('MovieController (e2e)', () => {
 
     return request(app.getHttpServer())
       .get('/movies')
-      .expect(200)
+      .expect(HttpStatus.OK)
       .expect([toRaw(movie)]);
+  });
+
+  it('[POST] /movies', () => {
+    const newMovie = { name: 'Pocahontas', director: 'Mike Gabriel' };
+
+    return request(app.getHttpServer())
+      .post('/movies')
+      .send(newMovie)
+      .expect(HttpStatus.CREATED);
+  });
+
+  it('[POST] /movies - validation error', () => {
+    const newMovie = { director: 'Stanley Kubrick' };
+
+    return request(app.getHttpServer())
+      .post('/movies')
+      .send({})
+      .expect(HttpStatus.BAD_REQUEST);
   });
 
   afterAll(async () => {
