@@ -41,7 +41,7 @@
     "@types/node": "^11.9.2",
     "@types/supertest": "^2.0.5",
     "jest": "^23.5.0",
-    "nodemon": "^1.18.3",
+    "nodemon": "^1.18.10",
     "prettier": "^1.16.4",
     "supertest": "^3.1.0",
     "testdouble": "^3.10.0",
