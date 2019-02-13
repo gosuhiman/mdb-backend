@@ -65,6 +65,7 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
+      "@error/(.*)": "<rootDir>/../../src/error/$1",
       "@movie/(.*)": "<rootDir>/../../src/movie/$1",
       "@root/(.*)": "<rootDir>/../../src/$1"
     }

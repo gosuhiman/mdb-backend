@@ -10,6 +10,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
+      "@error/*": ["src/error/*"],
       "@movie/*": ["src/movie/*"],
       "@root/*": ["src/*"]
     }
