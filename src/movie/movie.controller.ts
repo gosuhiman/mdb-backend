@@ -3,6 +3,7 @@ import {CreateMovieDTO} from './dto/create-movie.dto';
 import {UpdateMovieDTO} from './dto/update-movie.dto';
 import {Movie} from './movie.entity';
 import {MovieService} from './movie.service';
+import {OmdbApiClient} from 'omdb-api';
 
 @Controller('movies')
 export class MovieController {
@@ -34,5 +35,11 @@ export class MovieController {
   @Delete(':id')
   async remove(@Param('id') id): Promise<Movie> {
     return this.movieService.remove(id);
+  }
+
+  @Get('/add/:title')
+  async addMoviesToDatabase(@Param('title') title: string): Promise<any> {
+    const client: OmdbApiClient = new OmdbApiClient('??????');
+    return client.search(title);
   }
 }

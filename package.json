@@ -1,9 +1,9 @@
 {
   "name": "mdb-backend",
-  "version": "0.0.0",
-  "description": "description",
+  "version": "0.1.0",
   "author": "gosuhiman",
   "license": "MIT",
+  "description": "MDB backend",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -27,6 +27,7 @@
     "class-validator": "^0.9.1",
     "lodash": "^4.17.11",
     "mongodb": "^3.1.13",
+    "omdb-api": "git+https://github.com/gosuhiman/omdb-api.git",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.2.2",
