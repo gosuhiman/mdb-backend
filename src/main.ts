@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import {AllExceptionsFilter} from '@error/all-exception.filter';
 import {ValidationPipe} from '@nestjs/common';
 import {HTTP_SERVER_REF, NestFactory} from '@nestjs/core';
