@@ -3,7 +3,7 @@ import {CreateMovieDTO} from './dto/create-movie.dto';
 import {UpdateMovieDTO} from './dto/update-movie.dto';
 import {Movie} from './movie.entity';
 import {MovieService} from './movie.service';
-import {OmdbApiClient} from 'open-movie-database-api';
+import {OmdbApiClient, OmdbGetResult} from 'open-movie-database-api';
 
 @Controller('movies')
 export class MovieController {
@@ -40,6 +40,9 @@ export class MovieController {
   @Get('/add/:title')
   async addMoviesToDatabase(@Param('title') title: string): Promise<any> {
     const client: OmdbApiClient = new OmdbApiClient(process.env.OMDB_API_KEY);
-    return client.search(title);
+    return client.get(title)
+      .then((result: OmdbGetResult) => {
+        return result.Title + ' ' + result.imdbRating;
+      });
   }
 }
