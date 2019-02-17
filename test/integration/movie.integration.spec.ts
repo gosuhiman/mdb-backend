@@ -55,15 +55,6 @@ describe('MovieController (e2e)', () => {
       .expect([toRaw(movie)]);
   });
 
-  it('[POST] /movies', () => {
-    const newMovie = {imdbId: 'tt0076759'};
-
-    return request(app.getHttpServer())
-      .post('/movies')
-      .send(newMovie)
-      .expect(HttpStatus.CREATED);
-  });
-
   it('[POST] /movies - validation error', () => {
     const newMovie = {imdbId: 76759};
 

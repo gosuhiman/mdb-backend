@@ -7,6 +7,7 @@
     "^.+\\.(t|j)s$": "ts-jest"
   },
   "moduleNameMapper": {
+    "@error/(.*)": "<rootDir>/../../src/error/$1",
     "@movie/(.*)": "<rootDir>/../../src/movie/$1",
     "@root/(.*)": "<rootDir>/../../src/$1"
   }
