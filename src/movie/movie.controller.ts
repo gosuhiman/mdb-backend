@@ -1,6 +1,7 @@
-import {Body, Controller, Delete, Get, Param, Patch, Post} from '@nestjs/common';
+import {AlreadyExistsException} from '@error/already-exists.exception';
+import {OmdbService} from '@movie/omdb.service';
+import {Body, Controller, Get, Param, Post} from '@nestjs/common';
 import {CreateMovieDTO} from './dto/create-movie.dto';
-import {UpdateMovieDTO} from './dto/update-movie.dto';
 import {Movie} from './movie.entity';
 import {MovieService} from './movie.service';
 
@@ -8,12 +9,13 @@ import {MovieService} from './movie.service';
 export class MovieController {
   constructor(
     private readonly movieService: MovieService,
+    private readonly omdbService: OmdbService,
   ) {
   }
 
   @Get(':id')
   async get(@Param('id') id): Promise<Movie> {
-    return this.movieService.findOne(id);
+    return this.movieService.findById(id);
   }
 
   @Get()
@@ -23,16 +25,16 @@ export class MovieController {
 
   @Post()
   async create(@Body() createMovieDto: CreateMovieDTO): Promise<Movie> {
-    return this.movieService.create(createMovieDto);
+    const alreadyExists: boolean = await this.movieService.existsByImdbId(createMovieDto.imdbId);
+    if (alreadyExists) {
+      throw new AlreadyExistsException();
+    }
+    const movie: Movie = await this.omdbService.getByImdbId(createMovieDto.imdbId);
+    return this.movieService.create(movie);
   }
 
-  @Patch(':id')
-  async update(@Param('id') id, @Body() updateMovieDto: UpdateMovieDTO): Promise<Movie> {
-    return this.movieService.update(id, updateMovieDto);
-  }
-
-  @Delete(':id')
-  async remove(@Param('id') id): Promise<Movie> {
-    return this.movieService.remove(id);
+  @Get('/search/:title')
+  async search(@Param('title') title: string): Promise<Movie[]> {
+    return this.omdbService.search(title);
   }
 }

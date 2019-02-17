@@ -1,7 +1,5 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {merge} from 'lodash';
-import {CreateMovieDTO} from './dto/create-movie.dto';
 import {Movie} from './movie.entity';
 import {MovieRepository} from './movie.repository';
 
@@ -12,25 +10,20 @@ export class MovieService {
   ) {
   }
 
-  async create(createMovieDto: CreateMovieDTO): Promise<Movie> {
-    return this.movieRepository.save(createMovieDto);
+  async create(movie: Movie): Promise<Movie> {
+    return this.movieRepository.save(movie);
   }
 
-  async findOne(id: string): Promise<Movie> {
+  async findById(id: string): Promise<Movie> {
     return this.movieRepository.findOne(id);
+  }
+
+  async existsByImdbId(imdbId: string): Promise<boolean> {
+    const count: number = await this.movieRepository.count({imdbId});
+    return count > 0;
   }
 
   async findAll(conditions: Partial<Movie>): Promise<Movie[]> {
     return this.movieRepository.find(conditions);
-  }
-
-  async update(id: string, newData: Partial<Movie>): Promise<Movie> {
-    const movie: Movie = await this.movieRepository.findOne(id);
-    return this.movieRepository.save(merge(movie, newData));
-  }
-
-  async remove(id: string): Promise<Movie> {
-    const movie: Movie = await this.movieRepository.findOne(id);
-    return this.movieRepository.remove(movie);
   }
 }
