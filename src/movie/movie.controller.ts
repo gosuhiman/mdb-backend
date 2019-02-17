@@ -1,14 +1,14 @@
-import {Body, Controller, Delete, Get, Param, Patch, Post} from '@nestjs/common';
+import {OmdbService} from '@movie/omdb.service';
+import {Body, Controller, Get, Param, Post} from '@nestjs/common';
 import {CreateMovieDTO} from './dto/create-movie.dto';
-import {UpdateMovieDTO} from './dto/update-movie.dto';
 import {Movie} from './movie.entity';
 import {MovieService} from './movie.service';
-import {OmdbApiClient, OmdbGetResult} from 'open-movie-database-api';
 
 @Controller('movies')
 export class MovieController {
   constructor(
     private readonly movieService: MovieService,
+    private readonly omdbService: OmdbService,
   ) {
   }
 
@@ -24,25 +24,12 @@ export class MovieController {
 
   @Post()
   async create(@Body() createMovieDto: CreateMovieDTO): Promise<Movie> {
-    return this.movieService.create(createMovieDto);
+    const movie: Movie = await this.omdbService.getByImdbId(createMovieDto.imdbId);
+    return this.movieService.create(movie);
   }
 
-  @Patch(':id')
-  async update(@Param('id') id, @Body() updateMovieDto: UpdateMovieDTO): Promise<Movie> {
-    return this.movieService.update(id, updateMovieDto);
-  }
-
-  @Delete(':id')
-  async remove(@Param('id') id): Promise<Movie> {
-    return this.movieService.remove(id);
-  }
-
-  @Get('/add/:title')
-  async addMoviesToDatabase(@Param('title') title: string): Promise<any> {
-    const client: OmdbApiClient = new OmdbApiClient(process.env.OMDB_API_KEY);
-    return client.get(title)
-      .then((result: OmdbGetResult) => {
-        return result.Title + ' ' + result.imdbRating;
-      });
+  @Get('/search/:title')
+  async search(@Param('title') title: string): Promise<Movie[]> {
+    return this.omdbService.search(title);
   }
 }

@@ -6,7 +6,19 @@ export class Movie {
   id: ObjectID;
 
   @Column()
-  name: string;
+  imdbId: string;
+
+  @Column()
+  title: string;
+
+  @Column()
+  year: number;
+
+  @Column()
+  type: string;
+
+  @Column()
+  posterUrl: string;
 
   @Column()
   director: string;

@@ -1,3 +1,4 @@
+import {OmdbService} from '@movie/omdb.service';
 import {Module} from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {MovieController} from './movie.controller';
@@ -7,7 +8,7 @@ import {MovieService} from './movie.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Movie, MovieRepository])],
-  providers: [MovieService],
+  providers: [MovieService, OmdbService],
   controllers: [MovieController],
 })
 export class MovieModule {

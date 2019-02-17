@@ -56,7 +56,7 @@ describe('MovieController (e2e)', () => {
   });
 
   it('[POST] /movies', () => {
-    const newMovie = { name: 'Pocahontas', director: 'Mike Gabriel' };
+    const newMovie = {imdbId: 'tt0076759'};
 
     return request(app.getHttpServer())
       .post('/movies')
@@ -65,12 +65,18 @@ describe('MovieController (e2e)', () => {
   });
 
   it('[POST] /movies - validation error', () => {
-    const newMovie = { director: 'Stanley Kubrick' };
+    const newMovie = {imdbId: 76759};
 
     return request(app.getHttpServer())
       .post('/movies')
       .send({})
       .expect(HttpStatus.BAD_REQUEST);
+  });
+
+  it('[GET] /search', () => {
+    return request(app.getHttpServer())
+      .get('/movies/Blade%20Runner')
+      .expect(HttpStatus.OK);
   });
 
   afterAll(async () => {
