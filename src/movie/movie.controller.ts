@@ -1,9 +1,9 @@
-import {AlreadyExistsException} from '@error/already-exists.exception';
-import {OmdbService} from '@movie/omdb.service';
-import {Body, Controller, Get, Param, Post} from '@nestjs/common';
-import {CreateMovieDTO} from './dto/create-movie.dto';
-import {Movie} from './movie.entity';
-import {MovieService} from './movie.service';
+import { AlreadyExistsException } from '@error/already-exists.exception';
+import { OmdbService } from '@movie/omdb.service';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { CreateMovieDTO } from './dto/create-movie.dto';
+import { Movie } from './movie.entity';
+import { MovieService } from './movie.service';
 
 @Controller('movies')
 export class MovieController {
@@ -31,10 +31,5 @@ export class MovieController {
     }
     const movie: Movie = await this.omdbService.getByImdbId(createMovieDto.imdbId);
     return this.movieService.create(movie);
-  }
-
-  @Get('/search/:title')
-  async search(@Param('title') title: string): Promise<Movie[]> {
-    return this.omdbService.search(title);
   }
 }
